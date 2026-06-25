@@ -78,8 +78,12 @@ button {
   margin: 0.4rem 0;
 }
 
-.note-body a {
-  color: #000000;
+.note-body a,
+.note-body a:visited,
+.note-body a:hover,
+.note-body a:active {
+  color: #000000 !important;
+  -webkit-text-fill-color: #000000;
 }
 
 /* Interactive checklist blocks */
