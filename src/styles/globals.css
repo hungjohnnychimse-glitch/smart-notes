@@ -84,7 +84,11 @@ button {
 .note-body a:active {
   color: #000000 !important;
   -webkit-text-fill-color: #000000;
-  text-decoration-color: #000000;
+  text-decoration: none !important;
+}
+
+.note-body u {
+  text-decoration: none !important;
 }
 
 /* Interactive checklist blocks */

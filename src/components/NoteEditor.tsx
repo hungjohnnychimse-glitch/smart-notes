@@ -19,7 +19,28 @@ function forceBlackLinks(root: HTMLElement | null): void {
     anchor.style.color = '#000000';
     anchor.style.webkitTextFillColor = '#000000';
     anchor.style.textDecorationColor = '#000000';
-    anchor.style.textDecorationLine = 'underline';
+    anchor.style.textDecorationLine = 'none';
+  });
+}
+
+function stripUnderlines(root: HTMLElement | null): void {
+  if (!root) return;
+
+  root.querySelectorAll('u').forEach((node) => {
+    const parent = node.parentNode;
+    if (!parent) return;
+    while (node.firstChild) parent.insertBefore(node.firstChild, node);
+    parent.removeChild(node);
+  });
+
+  root.querySelectorAll('*').forEach((node) => {
+    const el = node as HTMLElement;
+    el.style.textDecorationLine = 'none';
+    if (el.tagName === 'A') {
+      el.style.color = '#000000';
+      el.style.webkitTextFillColor = '#000000';
+      el.style.textDecorationColor = '#000000';
+    }
   });
 }
 
@@ -46,6 +67,7 @@ export function NoteEditor({ noteId }: { noteId: string }) {
   useEffect(() => {
     if (editorRef.current && note) {
       editorRef.current.innerHTML = note.contentHtml;
+      stripUnderlines(editorRef.current);
       forceBlackLinks(editorRef.current);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -53,6 +75,8 @@ export function NoteEditor({ noteId }: { noteId: string }) {
 
   const flush = useCallback(() => {
     if (!editorRef.current) return;
+    stripUnderlines(editorRef.current);
+    forceBlackLinks(editorRef.current);
     void updateNoteContent(noteId, editorRef.current.innerHTML).then(() =>
       setStatus('saved'),
     );
@@ -74,20 +98,29 @@ export function NoteEditor({ noteId }: { noteId: string }) {
   }, [noteId]);
 
   function handleFormat(command: string) {
+    if (command === 'underline') {
+      stripUnderlines(editorRef.current);
+      forceBlackLinks(editorRef.current);
+      handleInput();
+      return;
+    }
     document.execCommand(command);
     editorRef.current?.focus();
+    stripUnderlines(editorRef.current);
     handleInput();
   }
 
   function handleFormatBlock(tag: string) {
     document.execCommand('formatBlock', false, tag);
     editorRef.current?.focus();
+    stripUnderlines(editorRef.current);
     handleInput();
   }
 
   const onPaste = useCallback(
     (e: React.ClipboardEvent<HTMLDivElement>) => {
       handleSmartPaste(e.nativeEvent);
+      stripUnderlines(editorRef.current);
       forceBlackLinks(editorRef.current);
       handleInput();
     },
@@ -141,6 +174,7 @@ export function NoteEditor({ noteId }: { noteId: string }) {
       return;
     }
     document.execCommand('createLink', false, url);
+    stripUnderlines(editorRef.current);
     forceBlackLinks(editorRef.current);
     handleInput();
   }
@@ -266,7 +300,7 @@ export function NoteEditor({ noteId }: { noteId: string }) {
         onFocus={() => setFocused(true)}
         onBlur={() => setFocused(false)}
         suppressContentEditableWarning
-        className="note-body flex-1 overflow-y-auto py-2 pb-16 text-[17px] leading-relaxed outline-none [&_a]:underline [&_ol]:list-decimal [&_ol]:pl-6 [&_ul]:list-disc [&_ul]:pl-6"
+        className="note-body flex-1 overflow-y-auto py-2 pb-16 text-[17px] leading-relaxed outline-none [&_ol]:list-decimal [&_ol]:pl-6 [&_ul]:list-disc [&_ul]:pl-6"
       />
 
       {toast && (
