@@ -81,13 +81,13 @@ export function convertPlainTextToSmartHtml(text: string): string {
       continue;
     }
 
-    // Plain text run: keep consecutive lines together with <br> (intentional breaks).
-    const para: string[] = [];
+    // Plain text run: one <div> per line (matches contenteditable's Enter and
+    // keeps each line a separate block, so only the FIRST line becomes the
+    // iOS-style big title — not the whole paste).
     while (i < lines.length && classify(lines[i]).kind === 'text') {
-      para.push(renderInline(lines[i].trim()));
+      out.push(`<div>${renderInline(lines[i].trim())}</div>`);
       i++;
     }
-    out.push(`<p>${para.join('<br>')}</p>`);
   }
 
   return out.join('');
