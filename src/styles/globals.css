@@ -60,7 +60,12 @@ button {
 /* The first line of a note renders as a big bold Title, iOS Notes style. */
 .note-body {
   color: #000000;
-  font-family: Arial, 'Helvetica Neue', Helvetica, sans-serif;
+  /* San Francisco (SF Pro) — the iPhone Notes typeface. Resolves to the real
+     system font on Apple devices; graceful fallbacks elsewhere. */
+  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'SF Pro',
+    'Helvetica Neue', Helvetica, Arial, sans-serif;
+  letter-spacing: -0.012em;
+  -webkit-font-smoothing: antialiased;
 }
 
 .note-body > *:first-child {
