@@ -58,6 +58,11 @@ button {
 }
 
 /* The first line of a note renders as a big bold Title, iOS Notes style. */
+.note-body {
+  color: #000000;
+  font-family: Arial, 'Helvetica Neue', Helvetica, sans-serif;
+}
+
 .note-body > *:first-child {
   font-size: 1.45rem;
   line-height: 1.9rem;
@@ -71,6 +76,10 @@ button {
   height: auto;
   border-radius: 0.6rem;
   margin: 0.4rem 0;
+}
+
+.note-body a {
+  color: #000000;
 }
 
 /* Interactive checklist blocks */

@@ -252,7 +252,7 @@ export function NoteEditor({ noteId }: { noteId: string }) {
         onFocus={() => setFocused(true)}
         onBlur={() => setFocused(false)}
         suppressContentEditableWarning
-        className="note-body flex-1 overflow-y-auto py-2 pb-16 text-[17px] leading-relaxed outline-none [&_a]:text-accent [&_a]:underline [&_ol]:list-decimal [&_ol]:pl-6 [&_ul]:list-disc [&_ul]:pl-6"
+        className="note-body flex-1 overflow-y-auto py-2 pb-16 text-[17px] leading-relaxed outline-none [&_a]:underline [&_ol]:list-decimal [&_ol]:pl-6 [&_ul]:list-disc [&_ul]:pl-6"
       />
 
       {toast && (
