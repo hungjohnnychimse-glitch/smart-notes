@@ -7,7 +7,7 @@ export function deriveTitle(contentText: string): string {
     .split('\n')
     .map((l) => l.trim())
     .find((l) => l.length > 0);
-  if (!firstLine) return 'New Note';
+  if (!firstLine) return 'Ghi chú mới';
   return firstLine.length > 100 ? firstLine.slice(0, 100) : firstLine;
 }
 

@@ -44,7 +44,7 @@ export const useNotesStore = create<NotesState>((set, get) => ({
     const now = Date.now();
     const note: Note = {
       id: uid(),
-      title: 'New Note',
+      title: 'Ghi chú mới',
       contentHtml: '',
       contentText: '',
       pinned: false,
@@ -100,7 +100,7 @@ export const useNotesStore = create<NotesState>((set, get) => ({
 
   async importNotes(incoming) {
     if (!Array.isArray(incoming)) {
-      throw new Error('Invalid file: expected an array of notes.');
+      throw new Error('Tệp không hợp lệ: cần một mảng ghi chú.');
     }
     const existingIds = new Set(get().notes.map((n) => n.id));
     const toAdd: Note[] = [];

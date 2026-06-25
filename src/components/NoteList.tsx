@@ -112,7 +112,7 @@ export function NoteList() {
           className="pointer-events-none absolute inset-x-0 text-center text-[17px] font-semibold transition-opacity duration-200"
           style={{ opacity: compactTitle ? 1 : 0 }}
         >
-          Notes
+          Ghi chú
         </span>
         <div
           className="flex items-center transition-opacity duration-200"
@@ -140,7 +140,7 @@ export function NoteList() {
           }}
         >
           <h1 className="pt-1 text-[34px] font-bold leading-tight tracking-tight">
-            Notes
+            Ghi chú
           </h1>
         </div>
 
@@ -152,14 +152,14 @@ export function NoteList() {
           <EmptyState searching={Boolean(search)} />
         ) : showSections ? (
           <>
-            {label('Pinned')}
+            {label('Đã ghim')}
             <Group
               notes={pinned}
               onOpen={openNote}
               onTogglePin={togglePin}
               onDelete={deleteNote}
             />
-            {label('Notes')}
+            {label('Ghi chú')}
             <Group
               notes={others}
               onOpen={openNote}
@@ -181,13 +181,11 @@ export function NoteList() {
       <div className="fixed inset-x-0 bottom-0 z-10 border-t border-ios-sep bg-ios-bg/85 backdrop-blur">
         <div className="relative mx-auto flex h-12 max-w-md items-center justify-center px-4">
           <span className="text-[13px] text-ios-2nd">
-            {notes.length === 0
-              ? 'No Notes'
-              : `${notes.length} ${notes.length === 1 ? 'Note' : 'Notes'}`}
+            {notes.length === 0 ? 'Không có ghi chú' : `${notes.length} ghi chú`}
           </span>
           <button
             onClick={() => void handleCreate()}
-            aria-label="Create new note"
+            aria-label="Tạo ghi chú mới"
             className="absolute right-3 flex h-11 w-11 items-center justify-center text-accent active:opacity-60"
           >
             <Icon name="compose" className="h-[26px] w-[26px]" />

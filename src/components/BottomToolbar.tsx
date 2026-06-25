@@ -34,9 +34,9 @@ export function BottomToolbar({
   const [showFormat, setShowFormat] = useState(false);
 
   const paraStyles: { label: string; tag: string; cls: string }[] = [
-    { label: 'Title', tag: 'h1', cls: 'text-xl font-bold' },
-    { label: 'Heading', tag: 'h2', cls: 'text-base font-semibold' },
-    { label: 'Body', tag: 'p', cls: 'text-[15px]' },
+    { label: 'Tiêu đề', tag: 'h1', cls: 'text-xl font-bold' },
+    { label: 'Đề mục', tag: 'h2', cls: 'text-base font-semibold' },
+    { label: 'Nội dung', tag: 'p', cls: 'text-[15px]' },
   ];
   const marks: { label: string; cmd: string; cls?: string }[] = [
     { label: 'B', cmd: 'bold', cls: 'font-bold' },
@@ -45,9 +45,9 @@ export function BottomToolbar({
     { label: 'S', cmd: 'strikeThrough', cls: 'line-through' },
   ];
   const lists: { label: string; aria: string; run: () => void }[] = [
-    { label: '•', aria: 'Bullet list', run: () => onFormat('insertUnorderedList') },
-    { label: '1.', aria: 'Numbered list', run: () => onFormat('insertOrderedList') },
-    { label: '☑︎', aria: 'Checklist', run: onChecklist },
+    { label: '•', aria: 'Danh sách chấm', run: () => onFormat('insertUnorderedList') },
+    { label: '1.', aria: 'Danh sách số', run: () => onFormat('insertOrderedList') },
+    { label: '☑︎', aria: 'Danh sách kiểm', run: onChecklist },
   ];
 
   const cell =
@@ -64,7 +64,7 @@ export function BottomToolbar({
           />
           <div
             role="menu"
-            aria-label="Text formatting"
+            aria-label="Định dạng văn bản"
             className="absolute bottom-full left-0 right-0 z-20 mb-1 space-y-2 rounded-2xl border border-ios-sep bg-ios-row p-3 shadow-xl"
           >
             <div className="flex gap-2">
@@ -98,7 +98,7 @@ export function BottomToolbar({
                   onMouseDown={hold(l.run)}
                   className={`${cell} text-lg`}
                 >
-                  {l.aria === 'Checklist' ? (
+                  {l.aria === 'Danh sách kiểm' ? (
                     <Icon name="checklist" className="h-5 w-5" />
                   ) : (
                     l.label
@@ -113,28 +113,28 @@ export function BottomToolbar({
       <div className="no-scrollbar flex items-center gap-1 overflow-x-auto border-t border-ios-sep bg-ios-bg/90 px-2 py-1 backdrop-blur">
         <button
           onMouseDown={hold(() => setShowFormat((v) => !v))}
-          aria-label="Text format"
+          aria-label="Định dạng"
           aria-expanded={showFormat}
           className={`${BTN} ${showFormat ? 'text-accent' : ''}`}
         >
           <span className="text-base font-bold">A</span>
           <span className="text-xs font-bold">a</span>
         </button>
-        <button onMouseDown={hold(onChecklist)} aria-label="Checklist" className={BTN}>
+        <button onMouseDown={hold(onChecklist)} aria-label="Danh sách kiểm" className={BTN}>
           <Icon name="checklist" className="h-[22px] w-[22px]" />
         </button>
-        <button onMouseDown={hold(onInsertLink)} aria-label="Insert link" className={BTN}>
+        <button onMouseDown={hold(onInsertLink)} aria-label="Chèn liên kết" className={BTN}>
           <Icon name="link" className="h-[22px] w-[22px]" />
         </button>
 
         <span className="mx-1 h-6 w-px shrink-0 bg-ios-sep" aria-hidden />
 
-        <button onMouseDown={hold(onCopy)} aria-label="Copy note" className={BTN}>
+        <button onMouseDown={hold(onCopy)} aria-label="Sao chép" className={BTN}>
           <Icon name="copy" className="h-[22px] w-[22px]" />
         </button>
         <button
           onMouseDown={hold(onCopyMarkdown)}
-          aria-label="Copy as Markdown"
+          aria-label="Sao chép Markdown"
           className={`${BTN} gap-0.5`}
         >
           <Icon name="markdown" className="h-[22px] w-[22px]" />
@@ -142,13 +142,13 @@ export function BottomToolbar({
         </button>
         <button
           onMouseDown={hold(onDownloadMarkdown)}
-          aria-label="Download as Markdown file"
+          aria-label="Tải tệp Markdown"
           className={`${BTN} gap-0.5`}
         >
           <Icon name="markdown" className="h-[22px] w-[22px]" />
           <span className="text-[11px] font-bold">↓</span>
         </button>
-        <button onMouseDown={hold(onShare)} aria-label="Share note" className={BTN}>
+        <button onMouseDown={hold(onShare)} aria-label="Chia sẻ" className={BTN}>
           <Icon name="share" className="h-[22px] w-[22px]" />
         </button>
       </div>

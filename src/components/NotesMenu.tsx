@@ -32,9 +32,9 @@ export function NotesMenu() {
     try {
       const parsed = JSON.parse(await file.text());
       const { added, skipped } = await importNotes(parsed);
-      window.alert(`Imported ${added} note(s)${skipped ? `, skipped ${skipped}` : ''}.`);
+      window.alert(`Đã nhập ${added} ghi chú${skipped ? `, bỏ qua ${skipped}` : ''}.`);
     } catch (err) {
-      window.alert(`Import failed: ${(err as Error).message}`);
+      window.alert(`Nhập thất bại: ${(err as Error).message}`);
     } finally {
       setOpen(false);
     }
@@ -47,7 +47,7 @@ export function NotesMenu() {
     <div className="relative">
       <button
         onClick={() => setOpen((v) => !v)}
-        aria-label="More options"
+        aria-label="Tùy chọn khác"
         aria-haspopup="menu"
         aria-expanded={open}
         className="flex h-11 w-11 items-center justify-center rounded-full text-accent active:opacity-60"
@@ -76,18 +76,18 @@ export function NotesMenu() {
                   setOpen(false);
                 }}
               >
-                Install app
+                Cài đặt ứng dụng
               </button>
             )}
             <button role="menuitem" className={item} onClick={handleExport}>
-              Export JSON
+              Xuất JSON
             </button>
             <button
               role="menuitem"
               className={item}
               onClick={() => fileRef.current?.click()}
             >
-              Import JSON
+              Nhập JSON
             </button>
           </div>
         </>

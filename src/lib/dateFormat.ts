@@ -8,7 +8,7 @@ export function formatNoteDate(ts: number): string {
     d.getDate() === now.getDate();
 
   if (sameDay) {
-    return d.toLocaleTimeString(undefined, { hour: '2-digit', minute: '2-digit' });
+    return d.toLocaleTimeString('vi-VN', { hour: '2-digit', minute: '2-digit' });
   }
 
   const yesterday = new Date(now);
@@ -17,10 +17,10 @@ export function formatNoteDate(ts: number): string {
     d.getFullYear() === yesterday.getFullYear() &&
     d.getMonth() === yesterday.getMonth() &&
     d.getDate() === yesterday.getDate();
-  if (isYesterday) return 'Yesterday';
+  if (isYesterday) return 'Hôm qua';
 
   const sameYear = d.getFullYear() === now.getFullYear();
-  return d.toLocaleDateString(undefined, {
+  return d.toLocaleDateString('vi-VN', {
     day: '2-digit',
     month: '2-digit',
     ...(sameYear ? {} : { year: 'numeric' }),

@@ -9,10 +9,10 @@ export function EmptyState({ searching }: { searching: boolean }) {
         strokeWidth={1.4}
       />
       <p className="text-base font-medium">
-        {searching ? 'No matching notes' : 'No notes yet'}
+        {searching ? 'Không tìm thấy ghi chú' : 'Chưa có ghi chú'}
       </p>
       {!searching && (
-        <p className="text-sm">Tap the compose button to create your first note.</p>
+        <p className="text-sm">Chạm nút soạn để tạo ghi chú đầu tiên.</p>
       )}
     </div>
   );

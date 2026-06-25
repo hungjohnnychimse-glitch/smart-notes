@@ -28,7 +28,7 @@ export function NoteCard({ note, onOpen, onTogglePin, onDelete }: Props) {
   };
 
   const preview =
-    note.contentText.split('\n').slice(1).join(' ').trim() || 'No additional text';
+    note.contentText.split('\n').slice(1).join(' ').trim() || 'Không có nội dung';
 
   function onPointerDown(e: React.PointerEvent) {
     start.current = { x: e.clientX, y: e.clientY };
@@ -94,19 +94,19 @@ export function NoteCard({ note, onOpen, onTogglePin, onDelete }: Props) {
             onTogglePin(note.id);
             setX(0);
           }}
-          aria-label={note.pinned ? 'Unpin note' : 'Pin note'}
+          aria-label={note.pinned ? 'Bỏ ghim ghi chú' : 'Ghim ghi chú'}
           className="flex w-[75px] flex-col items-center justify-center gap-1 bg-[#ff9f0a] text-xs font-medium text-white"
         >
           <Icon name={note.pinned ? 'pinSlash' : 'pin'} className="h-6 w-6" />
-          {note.pinned ? 'Unpin' : 'Pin'}
+          {note.pinned ? 'Bỏ ghim' : 'Ghim'}
         </button>
         <button
           onClick={() => onDelete(note.id)}
-          aria-label="Delete note"
+          aria-label="Xóa ghi chú"
           className="flex w-[75px] flex-col items-center justify-center gap-1 bg-[#ff3b30] text-xs font-medium text-white"
         >
           <Icon name="trash" className="h-6 w-6" />
-          Delete
+          Xóa
         </button>
       </div>
 
@@ -114,7 +114,7 @@ export function NoteCard({ note, onOpen, onTogglePin, onDelete }: Props) {
       <div
         role="button"
         tabIndex={0}
-        aria-label={`Open note: ${note.title || 'New Note'}`}
+        aria-label={`Mở ghi chú: ${note.title || 'Ghi chú mới'}`}
         onPointerDown={onPointerDown}
         onPointerMove={onPointerMove}
         onPointerUp={onPointerUp}
@@ -135,7 +135,7 @@ export function NoteCard({ note, onOpen, onTogglePin, onDelete }: Props) {
         className="row-fg relative ml-4 cursor-default select-none border-b border-ios-sep bg-ios-row py-2.5 pr-4 active:bg-ios-row2"
       >
         <p className="truncate text-[17px] font-semibold leading-tight">
-          {note.title || 'New Note'}
+          {note.title || 'Ghi chú mới'}
         </p>
         <p className="mt-0.5 flex gap-1.5 truncate text-[15px] text-ios-2nd">
           <span className="shrink-0">{formatNoteDate(note.updatedAt)}</span>

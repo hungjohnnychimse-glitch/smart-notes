@@ -36,7 +36,7 @@ export function InstallBanner() {
         </div>
         <div className="min-w-0 flex-1">
           <h2 className="text-[15px] font-semibold leading-5 text-ios-text">
-            Thêm Smart Notes vào Màn hình chính
+            Thêm Ghi chú vào Màn hình chính
           </h2>
           <p className="mt-1 text-[13px] leading-5 text-ios-2nd">
             Trong Safari, chạm nút Chia sẻ rồi chọn “Thêm vào Màn hình chính”.

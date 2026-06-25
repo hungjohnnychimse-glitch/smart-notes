@@ -2,9 +2,9 @@ import { useUIStore } from '../store/uiStore';
 import { Icon, type IconName } from './Icon';
 
 const FACE: Record<string, { icon: IconName; label: string }> = {
-  system: { icon: 'system', label: 'Theme: system' },
-  light: { icon: 'sun', label: 'Theme: light' },
-  dark: { icon: 'moon', label: 'Theme: dark' },
+  system: { icon: 'system', label: 'Giao diện: Tự động' },
+  light: { icon: 'sun', label: 'Giao diện: Sáng' },
+  dark: { icon: 'moon', label: 'Giao diện: Tối' },
 };
 
 export function ThemeToggle() {

@@ -151,26 +151,26 @@ export function NoteEditor({ noteId }: { noteId: string }) {
       await action();
       flash(ok);
     } catch {
-      flash('Action failed');
+      flash('Thao tác thất bại');
     }
   }
 
   const html = () => editorRef.current?.innerHTML ?? '';
-  const handleCopy = () => void runClipboard(() => copyRich(html()), 'Copied');
+  const handleCopy = () => void runClipboard(() => copyRich(html()), 'Đã sao chép');
   const handleCopyMarkdown = () =>
-    void runClipboard(() => copyMarkdown(html()), 'Copied Markdown');
+    void runClipboard(() => copyMarkdown(html()), 'Đã sao chép Markdown');
   const handleShare = () =>
-    void runClipboard(() => shareNote(note?.title ?? '', html()), 'Shared');
+    void runClipboard(() => shareNote(note?.title ?? '', html()), 'Đã chia sẻ');
   const handleDownloadMarkdown = () => {
     downloadText(`${safeFileName(note?.title ?? 'note')}.md`, htmlToMarkdown(html()), 'text/markdown');
-    flash('Downloaded .md');
+    flash('Đã tải .md');
   };
 
   function handleInsertLink() {
-    const url = window.prompt('Link URL (https://...)');
+    const url = window.prompt('Địa chỉ liên kết (https://...)');
     if (!url) return;
     if (!/^https?:\/\//i.test(url)) {
-      window.alert('Only http/https links are allowed.');
+      window.alert('Chỉ cho phép liên kết http/https.');
       return;
     }
     document.execCommand('createLink', false, url);
@@ -185,7 +185,7 @@ export function NoteEditor({ noteId }: { noteId: string }) {
   }
 
   function handleDelete() {
-    if (!window.confirm('Delete this note?')) return;
+    if (!window.confirm('Xóa ghi chú này?')) return;
     void deleteNote(noteId);
     closeNote();
   }
@@ -197,14 +197,14 @@ export function NoteEditor({ noteId }: { noteId: string }) {
       <header className="flex items-center justify-between py-1">
         <button
           onClick={handleBack}
-          aria-label="Back to notes"
+          aria-label="Quay lại"
           className="-ml-1 flex min-h-[44px] items-center text-[17px] text-accent active:opacity-60"
         >
           <Icon name="chevronLeft" className="h-6 w-6" strokeWidth={2.2} />
-          Notes
+          Ghi chú
         </button>
         <span className="text-[13px] text-ios-2nd" aria-live="polite">
-          {status === 'saving' ? 'Saving…' : 'Saved'}
+          {status === 'saving' ? 'Đang lưu…' : 'Đã lưu'}
         </span>
         {focused ? (
           // While editing, the actions menu is replaced by a Done button that
@@ -218,13 +218,13 @@ export function NoteEditor({ noteId }: { noteId: string }) {
             }}
             className="flex min-h-[44px] items-center px-1 text-[17px] font-semibold text-accent active:opacity-60"
           >
-            Done
+            Xong
           </button>
         ) : (
           <div className="relative text-accent">
             <button
               onClick={() => setMenuOpen((v) => !v)}
-              aria-label="More options"
+              aria-label="Tùy chọn khác"
               aria-haspopup="menu"
               aria-expanded={menuOpen}
               className="flex h-11 w-9 items-center justify-center active:opacity-60"
@@ -251,7 +251,7 @@ export function NoteEditor({ noteId }: { noteId: string }) {
                     }}
                     className="flex w-full items-center justify-between rounded-lg px-3 py-2 text-left text-[15px] text-ios-text active:bg-ios-search"
                   >
-                    {note.pinned ? 'Unpin' : 'Pin'}
+                    {note.pinned ? 'Bỏ ghim' : 'Ghim'}
                     <Icon
                       name={note.pinned ? 'pinSlash' : 'pin'}
                       className="h-[18px] w-[18px]"
@@ -265,7 +265,7 @@ export function NoteEditor({ noteId }: { noteId: string }) {
                     }}
                     className="flex w-full items-center justify-between rounded-lg px-3 py-2 text-left text-[15px] text-ios-text active:bg-ios-search"
                   >
-                    Share
+                    Chia sẻ
                     <Icon name="share" className="h-[18px] w-[18px]" />
                   </button>
                   <button
@@ -276,7 +276,7 @@ export function NoteEditor({ noteId }: { noteId: string }) {
                     }}
                     className="flex w-full items-center justify-between rounded-lg px-3 py-2 text-left text-[15px] text-red-500 active:bg-ios-search"
                   >
-                    Delete
+                    Xóa
                     <Icon name="trash" className="h-[18px] w-[18px]" />
                   </button>
                 </div>
@@ -291,8 +291,8 @@ export function NoteEditor({ noteId }: { noteId: string }) {
         contentEditable
         role="textbox"
         aria-multiline="true"
-        aria-label="Note content"
-        data-placeholder="Start writing…"
+        aria-label="Nội dung ghi chú"
+        data-placeholder="Bắt đầu viết…"
         onInput={handleInput}
         onPaste={onPaste}
         onKeyDown={onKeyDown}

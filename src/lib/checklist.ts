@@ -15,7 +15,7 @@
 export function checklistItemHtml(inner: string, checked: boolean): string {
   return (
     `<li data-checked="${checked}">` +
-    `<input type="checkbox"${checked ? ' checked' : ''} contenteditable="false" aria-label="Toggle checklist item">` +
+    `<input type="checkbox"${checked ? ' checked' : ''} contenteditable="false" aria-label="Bật/tắt mục">` +
     `<span>${inner}</span></li>`
   );
 }
@@ -30,7 +30,7 @@ function createItem(): HTMLLIElement {
   const input = document.createElement('input');
   input.type = 'checkbox';
   input.contentEditable = 'false';
-  input.setAttribute('aria-label', 'Toggle checklist item');
+  input.setAttribute('aria-label', 'Bật/tắt mục');
   li.append(input, document.createElement('span'));
   return li;
 }

@@ -29,8 +29,8 @@ export function SearchBar({ active, onActiveChange }: Props) {
           value={search}
           onChange={(e) => setSearch(e.target.value)}
           onFocus={() => onActiveChange(true)}
-          placeholder="Search"
-          aria-label="Search notes"
+          placeholder="Tìm kiếm"
+          aria-label="Tìm kiếm ghi chú"
           className="h-9 w-full rounded-[10px] bg-ios-search pl-8 pr-9 text-[17px] text-ios-text outline-none placeholder:text-ios-2nd"
         />
         {/* Mic affordance (decorative), shown only on an empty field like iOS. */}
@@ -53,7 +53,7 @@ export function SearchBar({ active, onActiveChange }: Props) {
           marginLeft: active ? 8 : 0,
         }}
       >
-        Cancel
+        Hủy
       </button>
     </div>
   );

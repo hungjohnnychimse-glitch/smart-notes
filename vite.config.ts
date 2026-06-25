@@ -14,9 +14,9 @@ export default defineConfig({
       registerType: 'autoUpdate',
       includeAssets: ['icons/icon-192.png', 'icons/icon-512.png', 'icons/maskable-icon.png'],
       manifest: {
-        name: 'Smart Notes',
-        short_name: 'Notes',
-        description: 'A fast offline smart notes app',
+        name: 'Ghi chú',
+        short_name: 'Ghi chú',
+        description: 'Ứng dụng ghi chú nhanh, hoạt động offline',
         id: base,
         start_url: base,
         scope: base,
