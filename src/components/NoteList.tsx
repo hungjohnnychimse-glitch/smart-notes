@@ -7,6 +7,7 @@ import { EmptyState } from './EmptyState';
 import { ThemeToggle } from './ThemeToggle';
 import { NotesMenu } from './NotesMenu';
 import { Icon } from './Icon';
+import { InstallBanner } from './InstallBanner';
 import type { Note } from '../types/note';
 
 function matches(note: Note, q: string): boolean {
@@ -144,6 +145,8 @@ export function NoteList() {
         </div>
 
         <SearchBar active={searchActive} onActiveChange={setSearchActive} />
+
+        <InstallBanner />
 
         {filtered.length === 0 ? (
           <EmptyState searching={Boolean(search)} />
