@@ -12,6 +12,17 @@ import { Icon } from './Icon';
 const SAVE_DEBOUNCE_MS = 500;
 const TOAST_MS = 1500;
 
+function forceBlackLinks(root: HTMLElement | null): void {
+  if (!root) return;
+  root.querySelectorAll('a').forEach((a) => {
+    const anchor = a as HTMLAnchorElement;
+    anchor.style.color = '#000000';
+    anchor.style.webkitTextFillColor = '#000000';
+    anchor.style.textDecorationColor = '#000000';
+    anchor.style.textDecorationLine = 'underline';
+  });
+}
+
 export function NoteEditor({ noteId }: { noteId: string }) {
   const note = useNotesStore((s) => s.notes.find((n) => n.id === noteId));
   const updateNoteContent = useNotesStore((s) => s.updateNoteContent);
@@ -35,6 +46,7 @@ export function NoteEditor({ noteId }: { noteId: string }) {
   useEffect(() => {
     if (editorRef.current && note) {
       editorRef.current.innerHTML = note.contentHtml;
+      forceBlackLinks(editorRef.current);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [noteId]);
@@ -76,6 +88,7 @@ export function NoteEditor({ noteId }: { noteId: string }) {
   const onPaste = useCallback(
     (e: React.ClipboardEvent<HTMLDivElement>) => {
       handleSmartPaste(e.nativeEvent);
+      forceBlackLinks(editorRef.current);
       handleInput();
     },
     [handleInput],
@@ -128,6 +141,7 @@ export function NoteEditor({ noteId }: { noteId: string }) {
       return;
     }
     document.execCommand('createLink', false, url);
+    forceBlackLinks(editorRef.current);
     handleInput();
   }
 
