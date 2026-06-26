@@ -95,6 +95,10 @@ export function convertPlainTextToSmartHtml(text: string): string {
 
 /** Insert HTML at the current caret position inside a contenteditable. */
 export function insertHtmlAtCursor(html: string): void {
+  // Never touch the selection for an empty insert — that would delete the
+  // current selection (e.g. select-all) and replace it with nothing.
+  if (!html) return;
+
   const sel = window.getSelection();
   if (!sel || sel.rangeCount === 0) {
     document.execCommand('insertHTML', false, html);
@@ -153,14 +157,25 @@ export function handleSmartPaste(event: ClipboardEvent): void {
     return;
   }
 
+  // Prefer rich HTML, but only when it survives sanitization with real content.
+  // Some sources (password managers, terminals) ship a bare <meta> wrapper as
+  // text/html while the actual value lives in text/plain — that would sanitize
+  // to nothing, so we must fall back to the plain text instead of wiping.
   if (html) {
-    event.preventDefault();
-    insertHtmlAtCursor(sanitizePastedHtml(html));
-    return;
+    const clean = sanitizePastedHtml(html);
+    if (clean) {
+      event.preventDefault();
+      insertHtmlAtCursor(clean);
+      return;
+    }
   }
 
   if (text) {
-    event.preventDefault();
-    insertHtmlAtCursor(convertPlainTextToSmartHtml(text));
+    const smart = convertPlainTextToSmartHtml(text);
+    if (smart) {
+      event.preventDefault();
+      insertHtmlAtCursor(smart);
+    }
+    // If it produced nothing (whitespace only), let the browser paste natively.
   }
 }
