@@ -53,6 +53,7 @@ export function NoteEditor({ noteId }: { noteId: string }) {
 
   const editorRef = useRef<HTMLDivElement>(null);
   const timer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const discarded = useRef(false);
   const [status, setStatus] = useState<'idle' | 'saving' | 'saved'>('saved');
   const [toast, setToast] = useState<string | null>(null);
   const [focused, setFocused] = useState(false);
@@ -88,11 +89,11 @@ export function NoteEditor({ noteId }: { noteId: string }) {
     timer.current = setTimeout(flush, SAVE_DEBOUNCE_MS);
   }, [flush]);
 
-  // Flush pending changes when leaving the editor.
+  // Flush pending changes when leaving the editor (unless the note was discarded).
   useEffect(() => {
     return () => {
       if (timer.current) clearTimeout(timer.current);
-      flush();
+      if (!discarded.current) flush();
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [noteId]);
@@ -179,13 +180,27 @@ export function NoteEditor({ noteId }: { noteId: string }) {
     handleInput();
   }
 
+  function isEmptyNote() {
+    const el = editorRef.current;
+    if (!el) return false;
+    // No visible text and no media → an untouched note (iOS discards these).
+    return !el.textContent?.trim() && !el.querySelector('img');
+  }
+
   function handleBack() {
-    flush();
+    if (isEmptyNote()) {
+      // Discard a note that was never given content, like iPhone Notes.
+      discarded.current = true;
+      void deleteNote(noteId);
+    } else {
+      flush();
+    }
     closeNote();
   }
 
   function handleDelete() {
     if (!window.confirm('Xóa ghi chú này?')) return;
+    discarded.current = true;
     void deleteNote(noteId);
     closeNote();
   }

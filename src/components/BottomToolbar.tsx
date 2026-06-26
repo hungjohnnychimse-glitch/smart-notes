@@ -41,7 +41,6 @@ export function BottomToolbar({
   const marks: { label: string; cmd: string; cls?: string }[] = [
     { label: 'B', cmd: 'bold', cls: 'font-bold' },
     { label: 'I', cmd: 'italic', cls: 'italic' },
-    { label: 'U', cmd: 'underline', cls: 'underline' },
     { label: 'S', cmd: 'strikeThrough', cls: 'line-through' },
   ];
   const lists: { label: string; aria: string; run: () => void }[] = [
