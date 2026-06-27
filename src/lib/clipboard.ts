@@ -1,23 +1,36 @@
 import { htmlToMarkdown } from './markdownExport';
 import { htmlToText } from './noteParser';
 
+function writeViaHiddenTextarea(text: string): boolean {
+  const ta = document.createElement('textarea');
+  ta.value = text;
+  ta.setAttribute('readonly', 'true');
+  ta.setAttribute('aria-hidden', 'true');
+  ta.setAttribute('tabindex', '-1');
+  ta.style.position = 'fixed';
+  ta.style.top = '0';
+  ta.style.right = '0';
+  ta.style.left = '-9999px';
+  ta.style.opacity = '0';
+  ta.style.pointerEvents = 'none';
+  ta.style.fontSize = '16px';
+  document.body.appendChild(ta);
+  ta.focus({ preventScroll: true });
+  ta.select();
+  ta.setSelectionRange(0, ta.value.length);
+  const ok = document.execCommand('copy');
+  document.body.removeChild(ta);
+  return ok;
+}
+
 async function writePlainTextFallback(text: string): Promise<void> {
+  if (writeViaHiddenTextarea(text)) return;
   if (navigator.clipboard?.writeText) {
     await navigator.clipboard.writeText(text);
     return;
   }
 
-  const ta = document.createElement('textarea');
-  ta.value = text;
-  ta.setAttribute('readonly', 'true');
-  ta.style.position = 'fixed';
-  ta.style.left = '-9999px';
-  ta.style.opacity = '0';
-  document.body.appendChild(ta);
-  ta.select();
-  const ok = document.execCommand('copy');
-  document.body.removeChild(ta);
-  if (!ok) throw new Error('Clipboard copy failed');
+  throw new Error('Clipboard copy failed');
 }
 
 /**
@@ -26,6 +39,7 @@ async function writePlainTextFallback(text: string): Promise<void> {
  */
 export async function copyRich(html: string): Promise<void> {
   const text = htmlToText(html);
+  if (writeViaHiddenTextarea(text)) return;
   if (typeof ClipboardItem !== 'undefined' && navigator.clipboard?.write) {
     try {
       await navigator.clipboard.write([
