@@ -76,8 +76,6 @@ export function NoteEditor({ noteId }: { noteId: string }) {
 
   const flush = useCallback(() => {
     if (!editorRef.current) return;
-    stripUnderlines(editorRef.current);
-    forceBlackLinks(editorRef.current);
     void updateNoteContent(noteId, editorRef.current.innerHTML).then(() =>
       setStatus('saved'),
     );
