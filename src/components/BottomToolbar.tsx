@@ -128,11 +128,11 @@ export function BottomToolbar({
 
         <span className="mx-1 h-6 w-px shrink-0 bg-ios-sep" aria-hidden />
 
-        <button onMouseDown={hold(onCopy)} aria-label="Sao chép" className={BTN}>
+        <button onClick={onCopy} aria-label="Sao chép" className={BTN}>
           <Icon name="copy" className="h-[22px] w-[22px]" />
         </button>
         <button
-          onMouseDown={hold(onCopyMarkdown)}
+          onClick={onCopyMarkdown}
           aria-label="Sao chép Markdown"
           className={`${BTN} gap-0.5`}
         >
@@ -140,14 +140,14 @@ export function BottomToolbar({
           <span className="text-[11px] font-bold">md</span>
         </button>
         <button
-          onMouseDown={hold(onDownloadMarkdown)}
+          onClick={onDownloadMarkdown}
           aria-label="Tải tệp Markdown"
           className={`${BTN} gap-0.5`}
         >
           <Icon name="markdown" className="h-[22px] w-[22px]" />
           <span className="text-[11px] font-bold">↓</span>
         </button>
-        <button onMouseDown={hold(onShare)} aria-label="Chia sẻ" className={BTN}>
+        <button onClick={onShare} aria-label="Chia sẻ" className={BTN}>
           <Icon name="share" className="h-[22px] w-[22px]" />
         </button>
       </div>
