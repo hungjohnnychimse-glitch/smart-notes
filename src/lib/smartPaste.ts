@@ -143,10 +143,15 @@ export function handleSmartPaste(event: ClipboardEvent): void {
     f.type.startsWith('image/'),
   );
 
+  if (images.length === 0 && !html && !text) return;
+
+  // Take over the paste completely so the browser does not also insert its
+  // own version after our sanitized HTML/text replacement.
+  event.preventDefault();
+
   // Prefer images only when there is no meaningful text/html alongside them
   // (rich editors often ship an <img> in the HTML payload already).
   if (images.length > 0 && !html && !text) {
-    event.preventDefault();
     void Promise.all(images.map(fileToDataUrl)).then((urls) => {
       insertHtmlAtCursor(
         urls
@@ -164,7 +169,6 @@ export function handleSmartPaste(event: ClipboardEvent): void {
   if (html) {
     const clean = sanitizePastedHtml(html);
     if (clean) {
-      event.preventDefault();
       insertHtmlAtCursor(clean);
       return;
     }
@@ -173,9 +177,9 @@ export function handleSmartPaste(event: ClipboardEvent): void {
   if (text) {
     const smart = convertPlainTextToSmartHtml(text);
     if (smart) {
-      event.preventDefault();
       insertHtmlAtCursor(smart);
     }
-    // If it produced nothing (whitespace only), let the browser paste natively.
+    // If it produced nothing (whitespace only), we intentionally paste nothing
+    // rather than falling back to a browser-native insert that may differ.
   }
 }
